@@ -40,7 +40,7 @@ uses the following structure:
         attrs      (rename-keys opts-map {:x :data-x, :y :data-y,
                                           :z :data-z, :scale :data-scale,
                                           :rotate :data-rotate})
-        attrs      (remove nil? (merge attrs {:id id :class classes}))
+        attrs      (into {} (remove nil? (merge attrs {:id id :class classes})))
         content    (nthnext args (or (and has-id? 2) 1))]
     (html
      [:div attrs content])))
