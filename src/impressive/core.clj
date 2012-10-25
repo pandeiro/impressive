@@ -35,7 +35,7 @@ uses the following structure:
         opts-map   (if has-id? (second args) first-arg)
         class      (if (string? (:class opts-map))
                      (vector (:class opts-map))
-                     (:class opt-map))
+                     (:class opts-map))
         classes    (apply str (interpose " " (list* "step" class)))
         attrs      (rename-keys opts-map {:x :data-x, :y :data-y,
                                           :z :data-z, :scale :data-scale,
