@@ -30,7 +30,8 @@ uses the following structure:
 (defn step
   "Returns an impress.js slide (<div class=\"step\">) in html. Arguments: a string or
 keyword id (optional), a map with :x, :y and optional :z, :scale, :rotate, and
-:class attributes, and the slide content as hiccup vectors.
+:class attributes, plus any additional arbitrary (data) attributes to pass,
+and the slide content as hiccup vectors.
 
 Example:
 (step :slide-id {:x 1000 :y 0 :rotate 180 :scale 2 :class [\"slide\" \"dark\"]}
