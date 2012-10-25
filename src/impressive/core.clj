@@ -28,6 +28,13 @@ uses the following structure:
     [:script "impress().init();"]]))
 
 (defn step
+  "Returns an impress.js slide (<div class=\"step\">) in html. Arguments: a string or
+keyword id (optional), a map with :x, :y and optional :z, :scale, :rotate, and
+:class attributes, and the slide content as hiccup vectors.
+
+Example:
+(step :slide-id {:x 1000 :y 0 :rotate 180 :scale 2 :class [\"slide\" \"dark\"]}
+      [:h1 \"This is my slide\"])"
   [& args]
   (let [first-arg  (first args)
         has-id?    (or (string? first-arg) (keyword? first-arg))
