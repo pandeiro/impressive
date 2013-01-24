@@ -1,4 +1,4 @@
-(defproject impressive "0.1.0"
+(defproject impressive "0.1.1"
   :description "Utility functions for composing impress.js presentations with Clojure/hiccup"
   :url "https://github.com/pandeiro/impressive"
   :license {:name "Eclipse Public License"
