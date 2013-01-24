@@ -40,7 +40,7 @@ Example:
   (let [first-arg  (first args)
         has-id?    (or (string? first-arg) (keyword? first-arg))
         id         (if has-id? (name first-arg))
-        opts-map   (if has-id? (second args) first-arg)
+        opts-map   (merge {:x 0 :y 0} (if has-id? (second args) first-arg))
         class      (if (string? (:class opts-map))
                      (vector (:class opts-map))
                      (:class opts-map))
