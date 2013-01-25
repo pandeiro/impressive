@@ -29,32 +29,23 @@ uses the following structure:
 
 (defn step
   "Returns an impress.js slide (<div class=\"step\">) in html. Arguments: a string or
-keyword id (optional), a map with :x, :y and optional :z, :scale, :rotate, and
+keyword id (optional), a map (optional) with any of :x, :y, :z, :scale, :rotate, and
 :class attributes, plus any additional arbitrary (data) attributes to pass,
 and the slide content as hiccup vectors.
 
 Example:
-(step :slide-id {:x 1000 :y 0 :rotate 180 :scale 2 :class [\"slide\" \"dark\"]}
-      [:h1 \"This is my slide\"])"
+(step :id-of-slide {:x 0 :y 0 :z 0 :scale 4 :rotate 270 :class \"green\"}
+      [:h1 \"Something\"])"
   [& args]
-  (let [first-arg  (first args)
-        has-id?    (or (string? first-arg) (keyword? first-arg))
-        id         (if has-id? (name first-arg))
-        no-opts?   (or (and has-id? (vector? (second args)) (vector? (first args))))
-        opts-map   (merge {:x 0 :y 0} (or (when no-opts? nil)
-                                          (and has-id? (second args))
-                                          (first args)))
-        class      (if (string? (:class opts-map))
-                     (vector (:class opts-map))
-                     (:class opts-map))
-        classes    (apply str (interpose " " (list* "step" class)))
-        attrs      (rename-keys opts-map {:x :data-x, :y :data-y,
-                                          :z :data-z, :scale :data-scale,
-                                          :rotate :data-rotate})
-        attrs      (into {} (remove nil? (merge attrs {:id id :class classes})))
-        content    (nthnext args (or (and has-id? 2) 1))]
+  (let [id      (first (filter #(or (keyword? %) (string? %)) args))
+        opts    (merge {:x 0 :y 0} (first (filter map? args)))
+        content (first (filter vector? args))
+        class   (cond (vector? (:class opts)) (:class opts)
+                      (string? (:class opts)) (vector (:class opts)))
+        classes (apply str (interpose " " (list* "step" class)))
+        attrs   (rename-keys opts {:x :data-x, :y :data-y,
+                                   :z :data-z, :scale :data-scale,
+                                   :rotate :data-rotate})
+        attrs   (into {} (remove nil? (merge attrs {:id id :class classes})))]
     (html
      [:div attrs content])))
-
-
-
