@@ -33,9 +33,8 @@ keyword id (optional), a map (optional) with any of :x, :y, :z, :scale, :rotate,
 :class attributes, plus any additional arbitrary (data) attributes to pass,
 and the slide content as hiccup vectors.
 
-Example:
-)(step :id-of-slide {:x 0 :y 0 :z 0 :scale 4 :rotate 270 :class \"green\"}
-      [:h1 \"Something\"])"
+Example: (step :id-of-slide {:x 0 :y 0 :z 0 :scale 4 :rotate 270 :class \"green\"}
+               [:h1 \"Something\"])"
   [& args]
   (let [id      (first (filter #(or (keyword? %) (string? %)) args))
         opts    (merge {:x 0 :y 0} (first (filter map? args)))
