@@ -1,7 +1,9 @@
 (ns impressive.core
   (:use [hiccup.core :only [html]]
         [hiccup.page :only [html5]])
-  (:require [clojure.set :refer [rename-keys]]))
+  (:require [clojure.set :refer [rename-keys]]
+            [clojure.java.io :as io])
+  (:import [java.io File]))
 
 (defn impress
   "Creates an HTML5 skeleton for an impress.js project, assuming the project
@@ -53,4 +55,17 @@ Example: (step :id-of-slide {:x 0 :y 0 :z 0 :scale 4 :rotate 270 :class \"green\
   "Given a directory name and html representing impress.js slides, outputs the
 html, js and css files with the default structure"
   [dir html]
-  )
+  (let [out (io/file dir)
+        js-path (str dir (File/separator) "js")
+        css-path (str dir (File/separator) "css")]
+    (when (or (and (.exists out) (.isDirectory out))
+              (not (.exists out)))
+      (when-not (.exists out)
+        (.mkdir out))
+      (spit (str dir (File/separator) "index.html") html)
+      (do (.mkdir (io/file js-path))
+          (io/copy (io/file "impress.js/js/impress.js")
+                   (io/file (str js-path (File/separator) "impress.js"))))
+      (do (.mkdir (io/file css-path))
+          (io/copy (io/file "impress.js/css/impress-demo.css")
+                   (io/file (str css-path (File/separator) "style.css")))))))
