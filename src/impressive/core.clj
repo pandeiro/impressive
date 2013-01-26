@@ -34,7 +34,7 @@ keyword id (optional), a map (optional) with any of :x, :y, :z, :scale, :rotate,
 and the slide content as hiccup vectors.
 
 Example:
-(step :id-of-slide {:x 0 :y 0 :z 0 :scale 4 :rotate 270 :class \"green\"}
+)(step :id-of-slide {:x 0 :y 0 :z 0 :scale 4 :rotate 270 :class \"green\"}
       [:h1 \"Something\"])"
   [& args]
   (let [id      (first (filter #(or (keyword? %) (string? %)) args))
@@ -49,3 +49,9 @@ Example:
         attrs   (into {} (remove nil? (merge attrs {:id id :class classes})))]
     (html
      [:div attrs content])))
+
+(defn export-slides
+  "Given a directory name and html representing impress.js slides, outputs the
+html, js and css files with the default structure"
+  [dir html]
+  )
